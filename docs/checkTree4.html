@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="renderer" content="webkit|ie-stand">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="css/H-ui.reset.css">
+  <link rel="stylesheet" type="text/css" href="libs/checktree/3.2.0/checktree.css">
+  <link rel="stylesheet" type="text/css" href="libs/zTree/css/zTreeStyle/zTreeStyle.css">
+</head>
+
+<body>
+  <div class="checktree">
+  </div>
+  <div class="checktree-footer">
+    <a href="javascript:;" class="checktree-btn-sure" id="sure">确 定</a>
+    <a href="javascript:;" class="checktree-btn-cancel" id="cancel">取 消</a>
+  </div>
+
+  <script type="text/javascript" src="libs/jquery/1.11.3/jquery.min.js"></script>
+  <script type="text/javascript" src="libs/zTree/js/jquery.ztree.core.min.js"></script>
+  <script type="text/javascript" src="libs/zTree/js/jquery.ztree.excheck.min.js"></script>
+  <script type="text/javascript" src="libs/zTree/js/jquery.ztree.exhide.min.js"></script>
+  <script type="text/javascript" src="libs/checktree/3.2.0/checktree.js"></script>
+  <script type="text/javascript">
+
+  $(function() {
+    var limit=GetQuery('limit'); //最多选择的数量
+    var callbackName=GetQuery('callbackName'); //回调
+    var dataName=GetQuery('dataName'); //获取来源页面的数据
+    var data = dataName?JSON.parse(parent[dataName]):null;
+    var ids1 = data?data[1]:"";
+    var ids2 = data?data[3]:"";
+    var ids3 = data?data[5]:"";
+
+    var zTreeObjCollection=new Array(3);
+
+   /* $.ajax({
+      url:'',
+      cache:false,
+      complete:function(data){*/
+        setTimeout(function() {
+            var data=[
+              {id:1,name:'张一'},
+              {id:2,name:'李二'},
+              { name:'单位1', count:2, isParent:true, children:[
+                  {id:3,name:'李三'},
+                  {id:4,name:'王四'}
+              ]},
+              { name:'单位2', count:4, isParent:true, children:[
+                { id:5,name:'李五'},
+                { id:6,name:'王六'},
+                { name:'科室1', count:2, isParent:true, children:[
+                    {id:7,name:'何七'},
+                    {id:8,name:'张八'}
+                ]},
+                { name:'科室2', count:2, isParent:true, children:[
+                    {id:9,name:'邱九'},
+                    {id:10,name:'李十'}
+                ]}
+              ]},
+              { name:'单位3', isParent:true, count:0 }
+            ];
+
+            //初始化
+            zTreeObjCollection[0] = $('.checktree').checkTree(data,{
+              title:"员工"
+              ,limit:limit
+              ,checkedData:ids1
+              ,skin:"large"
+              ,showSelected: true
+            });
+
+
+            var data2=[ 
+              { id:'keshi1', name:'科室1'},
+              { id:'keshi2', name:'科室2'}
+            ];
+
+            //初始化
+            zTreeObjCollection[1] = $('.checktree').checkTree(data2,{
+              title:"部门"
+              ,limit:limit
+              ,checkedData:ids2
+              ,skin:"large"
+              ,showSelected: true
+            });
+
+
+            var data3=[ 
+              { id:'unit1', name:'单位1'},
+              { id:'unit2', name:'单位2'},
+              { id:'unit3', name:'单位3'}
+            ];
+
+            //初始化
+            zTreeObjCollection[2] = $('.checktree').checkTree(data3,{
+              title:"单位"
+              ,limit:limit
+              ,checkedData:ids3
+              ,skin:"large"
+              ,showSelected: true
+            });
+        },400)
+      /*}
+    })*/
+
+    //确定
+    $('body').on('click','#sure',function() {
+      var data=[];
+      $.each(zTreeObjCollection,function(i,zTreeObj) {
+        var checkedData=zTreeObj.getCheckedData();
+        var names="";
+        var ids="";
+
+        for (var i = 0; i < checkedData.length; i++) {
+          ids+=(ids?",":"")+checkedData[i].id
+          names+=(names?",":"")+checkedData[i].name
+        }
+        data.push(names)
+        data.push(ids)
+      })
+       
+      callbackName&&parent[callbackName](JSON.stringify(data))
+    }) 
+
+    //取消
+    $('body').on('click','#cancel',function() {
+      parent.layer.close(parent.layer.getFrameIndex(window.name)); //再执行关闭       
+    })
+  })
+  
+  </script>
+</body>
+
+</html>

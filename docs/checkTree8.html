@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="renderer" content="webkit|ie-stand">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="css/H-ui.reset.css">
+  <link rel="stylesheet" type="text/css" href="libs/checktree/3.2.0/checktree.css">
+  <link rel="stylesheet" type="text/css" href="libs/zTree/css/zTreeStyle/zTreeStyle.css">
+</head>
+
+<body>
+  <div class="checktree">
+  </div>
+  <div class="checktree-footer">
+    <a href="javascript:;" class="checktree-btn-sure" id="sure">确 定</a>
+    <a href="javascript:;" class="checktree-btn-cancel" id="cancel">取 消</a>
+  </div>
+
+  <script type="text/javascript" src="libs/jquery/1.11.3/jquery.min.js"></script>
+  <script type="text/javascript" src="libs/zTree/js/jquery.ztree.core.min.js"></script>
+  <script type="text/javascript" src="libs/zTree/js/jquery.ztree.excheck.min.js"></script>
+  <script type="text/javascript" src="libs/zTree/js/jquery.ztree.exhide.min.js"></script>
+  <script type="text/javascript" src="libs/checktree/3.2.0/checktree.js"></script>
+  <script type="text/javascript">
+
+  $(function() {
+    var limit=GetQuery('limit'); //最多选择的数量
+    var callbackName=GetQuery('callbackName'); //回调
+    var dataName=GetQuery('dataName'); //获取来源页面的数据
+    var ids = dataName?JSON.parse(parent[dataName])[1]:"";
+
+    var skin=GetQuery('skin'); //皮肤
+    var showIcon=GetQuery('showIcon'); //皮肤
+
+    var zTreeObj
+
+   /* $.ajax({
+      url:'',
+      cache:false,
+      complete:function(data){*/
+        setTimeout(function() {
+          var data=[
+            { id:"1", name:skin.indexOf('line-break')>-1?'测试数据测试数据测试数据测试数据测试数据测试数据据测试数据测试数据':'测试数据', count:2, isParent:true, children:[
+                {id:11,name:'测试数据'},
+                {id:12,name:'测试数据'}
+              ]},
+            { id:"2", name:'测试数据', count:4, isParent:true, children:[
+                { id:21,name:'测试数据'},
+                { id:22,name:'测试数据'},
+                { id:23, name:'测试数据', count:2, isParent:true, children:[
+                    {id:231,name:'测试数据'},
+                    {id:232,name:'测试数据'}
+                  ]}
+              ]},
+            { id:"3", name:'测试数据', isParent:true, count:0 },
+            { id:"4", name:'测试数据', isParent:true, count:1 , children:[
+                {id:41,name:'测试数据'}
+              ]},
+            {id:5,name:'测试数据'},
+            {id:6,name:'测试数据'}
+          ];
+
+            //初始化
+            zTreeObj = $('.checktree').checkTree(data,{
+              title:"请选择"
+              ,limit:limit
+              ,checkedData:ids
+              ,skin:skin
+              , pNodeCheckable:true //父节点可选择，可以使用数组配置哪些层级的父节点可选
+              , checkLevelable:true //开启层级全选,可以使用数组配置哪些层级开启
+              , view:{
+                showIcon: !showIcon||showIcon=='false'?false:true
+              }
+              // ,check:{
+              //   enable:false
+              // }
+              ,countChild: false
+            });
+        },400)
+      /*}
+    })*/
+
+    //确定
+    $('body').on('click','#sure',function() {
+      var checkedData=zTreeObj.getCheckedData();
+      var data=[];
+      var names="";
+      var ids="";
+      for (var i = 0; i < checkedData.length; i++) {
+        ids+=(ids?",":"")+checkedData[i].id
+        names+=(names?",":"")+checkedData[i].name
+      }
+      data.push(names)
+      data.push(ids)
+       
+      callbackName&&parent[callbackName](JSON.stringify(data))
+    }) 
+
+    //取消
+    $('body').on('click','#cancel',function() {
+      parent.layer.close(parent.layer.getFrameIndex(window.name)); //再执行关闭       
+    })
+  })
+  
+  </script>
+</body>
+
+</html>

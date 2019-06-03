@@ -1,0 +1,18 @@
+{
+  "lv1":[
+    {"id":"1", "name":"单位1","isParent":true},
+    {"id":"2", "name":"广东万维","isParent":false},
+    {"id":"3", "name":"深圳万维","isParent":false}
+  ],
+  "lv2":[
+    {"id":"11", "name":"科室1","isParent":true},
+    {"id":"12", "name":"张领导","isParent":false},
+    {"id":"13", "name":"王领导","isParent":false}
+  ],
+  "lv3":[
+    {"id":"111", "name":"李流","isParent":false},
+    {"id":"112", "name":"聂新理","isParent":false},
+    {"id":"113", "name":"宏丽琼","isParent":false},
+    {"id":"114", "name":"李天强","isParent":false}
+  ]
+}
