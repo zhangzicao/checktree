@@ -13,7 +13,7 @@
  * @param  {number}   option.inputsAction=1 inputs快捷操作类型，1代表把input里数据传过去也把传回来的数据填充到input里，2代表只把input里的数据传过去不对传回来的数据做操作，3代表不传input里的数据过去只把传回来的数据填入input内
  * @param  {Function} [callback]     弹窗页面调用call方法时会触发的回调，参数为传输过来的数据，选填
  * @author zhangzicao
- * @version 0.0.1
+ * @version 0.0.2
  * @requires jquery,layer
  */
 function layer_hand(url,title,w,h,inputs,option,callback){
@@ -49,7 +49,7 @@ function layer_hand(url,title,w,h,inputs,option,callback){
   // 通过input快速传递数据的处理
   if( inputs instanceof Array && inputs.length>0 && (option.inputsAction==1 ||option.inputsAction==2)){
     handData=$.map(inputs,function(inputEl) {
-      return $(inputEl).val()
+      return $(inputEl).val()||""
     })
   }
 
@@ -120,4 +120,4 @@ function layer_hand(url,title,w,h,inputs,option,callback){
   }))
 
   return layerIndex
-} 
+}
