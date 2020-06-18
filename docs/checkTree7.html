@@ -10,7 +10,7 @@
   <meta http-equiv="Expires" content="0">
   <title></title>
   <link rel="stylesheet" type="text/css" href="css/H-ui.reset.css">
-  <link rel="stylesheet" type="text/css" href="libs/checktree/3.2.0/checktree.css">
+  <link rel="stylesheet" type="text/css" href="libs/checktree/3.2.1/checktree.css">
   <link rel="stylesheet" type="text/css" href="libs/zTree/css/zTreeStyle/zTreeStyle.css">
 </head>
 
@@ -26,7 +26,7 @@
   <script type="text/javascript" src="libs/zTree/js/jquery.ztree.core.min.js"></script>
   <script type="text/javascript" src="libs/zTree/js/jquery.ztree.excheck.min.js"></script>
   <script type="text/javascript" src="libs/zTree/js/jquery.ztree.exhide.min.js"></script>
-  <script type="text/javascript" src="libs/checktree/3.2.0/checktree.js"></script>
+  <script type="text/javascript" src="libs/checktree/3.2.1/checktree.js"></script>
   <script type="text/javascript">
 
   $(function() {
@@ -93,16 +93,16 @@
       }
       data.push(names)
       data.push(ids)
-       
+
       callbackName&&parent[callbackName](JSON.stringify(data))
-    }) 
+    })
 
     //取消
     $('body').on('click','#cancel',function() {
-      parent.layer.close(parent.layer.getFrameIndex(window.name)); //再执行关闭       
+      parent.layer.close(parent.layer.getFrameIndex(window.name)); //再执行关闭
     })
   })
-  
+
   </script>
 </body>
 

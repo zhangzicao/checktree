@@ -66,7 +66,7 @@
 .checktree.skin-large .checktree-selected-list__item{font-size:14px }
 .checktree.skin-large .ztree a input.rename{font-size: 14px;height: 20px;}
 
-  /*normal*/
+/*normal*/
 .checktree.skin-normal *{font-size: 14px;}
 .checktree.skin-normal .ztree .chk,.checktree.skin-normal .ztree .switch{float: left; width: 20px; height: 20px; margin: 5px 0;background-image: url(icon_tree_normal.png);position: relative;z-index: 1}
 .checktree.skin-normal .ztree a{position: relative;display: inline-block;min-width: 100% ;line-height: 20px;height: 30px;padding: 5px 0;box-sizing: border-box;}
@@ -74,6 +74,7 @@
 .checktree.skin-normal .ztree .chk+a{text-indent: 43px;margin-left: -43px}
 .checktree.skin-normal .ztree a:hover{color: #222222;text-decoration: none;}
 .checktree.skin-normal .ztree ul.line {background-image: none;}
+.checktree.skin-normal .ztree li { overflow: hidden;}
 
 .checktree.skin-normal .ztree a:hover { background: #f7fbff;}
 .checktree.skin-normal .ztree a:hover:before { content: ' ';display: block;height: 0;position: absolute;top: 0;left: 0;right: 0;border-top: 1px solid #e5f0fb;}
@@ -87,6 +88,24 @@
 .checktree.skin-normal .ztree span.button.center_close,.checktree.skin-normal .ztree span.button.roots_close,.checktree.skin-normal .ztree span.button.root_close,.checktree.skin-normal .ztree span.button.bottom_close,.checktree.skin-normal .ztree span.button.noline_close{background-position: -26px -2px;}
 .checktree.skin-normal .ztree span.button.center_open,.checktree.skin-normal .ztree span.button.roots_open,.checktree.skin-normal .ztree span.button.root_open,.checktree.skin-normal .ztree span.button.bottom_open,.checktree.skin-normal .ztree span.button.noline_open{background-position: -26px -26px;}
 
+/*连线*/
+.checktree.skin-normal .ztree span.button.center_open:after,
+.checktree.skin-normal .ztree span.button.center_close:after,
+.checktree.skin-normal .ztree span.button.roots_open:after,
+.checktree.skin-normal .ztree span.button.roots_close:after{ content: ' '; display: block; position: absolute; left: 50%; top: 50%; margin-top: 5px; bottom: -115px; width: 0; border-left: 1px dotted #ccc; }
+.checktree.skin-normal .ztree span.button.center_open:before,
+.checktree.skin-normal .ztree span.button.center_close:before,
+.checktree.skin-normal .ztree span.button.bottom_open:before,
+.checktree.skin-normal .ztree span.button.bottom_close:before{ content: ' '; display: block; position: absolute; left: 50%; bottom: 50%; margin-bottom: 5px; top: -4px; width: 0; border-left: 1px dotted #ccc; }
+.checktree.skin-normal .ztree span.button.roots_docu:before{ content: ' '; display: block; position: absolute; left: 50%; top: 50%; bottom: -115px; width: 0; border-left: 1px dotted #ccc; }
+.checktree.skin-normal .ztree span.button.center_docu:before{ content: ' '; display: block; position: absolute; left: 50%; top: -4px; bottom: -115px; width: 0; border-left: 1px dotted #ccc; }
+.checktree.skin-normal .ztree span.button.center_docu:after{ content: ' '; display: block; position: absolute; left: 50%; top: 50%; width: 9px; border-bottom: 1px dotted #ccc; }
+.checktree.skin-normal .ztree span.button.bottom_docu:before{ content: ' '; display: block; position: absolute; left: 50%; top: -4px; bottom: 50%; width: 9px; border-left: 1px dotted #ccc; border-bottom: 1px dotted #ccc; }
+.checktree.skin-normal ul.line{ position: relative; }
+.checktree.skin-normal ul.line:before{ content: ' '; display: block; position: absolute; left: 10px; top: -4px; bottom: -4px; width: 0; border-left: 1px dotted #ccc; }
+.checktree.skin-normal ul .check-all-item span.button.center_docu:before,.checktree.skin-normal ul .check-all-item span.button.center_docu:after{ content: none; }
+.checktree.skin-normal ul.line .check-all-item span.button.center_docu:before,.checktree.skin-normal ul.line .check-all-item span.button.center_docu:after{ content: ' '; }
+
 .checktree.skin-normal .ztree span.button.chk{margin-right:2px; }
 .checktree.skin-normal .ztree span.button.chk.checkbox_false_full,.checktree.skin-normal .ztree span.button.chk.checkbox_false_full_focus{background-position: -50px -2px;}
 .checktree.skin-normal .ztree span.button.chk.checkbox_false_part,.checktree.skin-normal .ztree span.button.chk.checkbox_false_part_focus{background-position: -50px -26px;}
@@ -97,15 +116,16 @@
 .checktree.skin-normal .ztree span.button.chk.radio_true_full,.checktree.skin-normal .ztree span.button.chk.radio_true_full_focus{background-position: -74px -50px;}
 .checktree.skin-normal .ztree span.button.chk.radio_true_part,.checktree.skin-normal .ztree span.button.chk.radio_true_part_focus{background-position: -74px -74px;}
 
-.checktree.skin-normal .ztree a>span.button:first-child{margin: 0 3px 0 0;width: 20px; height: 20px; background-image: url(icon_tree_normal.png);position: relative;z-index: 1}
-.checktree.skin-normal .ztree span.button.ico_close{background-position: -2px -2px;}
-.checktree.skin-normal .ztree span.button.ico_open{background-position: -2px -26px;}
-.checktree.skin-normal .ztree span.button.ico_docu{background-position: -2px -50px;}
+.checktree.skin-normal .ztree a>span.button.ico_close,.checktree.skin-normal .ztree a>span.button.ico_open,.checktree.skin-normal .ztree a>span.button.ico_docu{margin: -2px 1px -2px -2px;width: 24px; height: 24px; background-image: url(icon_tree_normal.png);position: relative;z-index: 1;}
+.checktree.skin-normal .ztree span.button.ico_close{background-position: 0 0;}
+.checktree.skin-normal .ztree span.button.ico_open{background-position: 0 -24px;}
+.checktree.skin-normal .ztree span.button.ico_docu{background-position: 0 -48px;}
+.checktree.skin-normal .ztree span.button.ico_loading{ margin: 2px 5px 2px 2px;}
 
 .checktree.skin-normal .ztree a input.rename{font-size: 14px;height: 20px;}
 
 /*all-folder*/
-.skin-normal.skin-all-folder .ztree span.button.ico_docu{background-position: -2px -2px;}
+.skin-normal.skin-all-folder .ztree span.button.ico_docu{background-position: 0 0;}
 
 /*line-break*/
 .checktree.skin-line-break .ztree a{white-space: normal;height: auto;}

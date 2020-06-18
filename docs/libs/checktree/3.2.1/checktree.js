@@ -3,7 +3,7 @@
  * @namespace $.fn.checkTree
  * @author zhangzicao
  * @requires jquery,ztree
- * @version 3.2.0
+ * @version 3.2.1
  * @param  {array} zNodes 数据json
  * @param  {object} option 配置
  * @param  {string} option.title 列标题
@@ -21,7 +21,7 @@
  * @param  {Boolean} option.filterDeleted=true 是否过滤掉已删除的空数据。这里的已删除的数据指后台删除节点数据后，有已选中id但是无对应节点数据的那些数据。
  * @param  {Boolean} option.countChild=true 是否计算并显示子节点数量。需要注意的是异步模式下需要用户提供count字段。
  * @param  {function} option.onChange 选中变化时触发，onChange(changeNodes,treeId,action)，3个参数分别是1.变化的节点，2.树id，3.引起此次变化的操作。action包含7个值，分别是init(有默认选中时触发)、check（单个节点选中/取消事件触发）、checkAll（全选事件触发）、uncheckAll（全取消事件触发）、delete（已选列表delete按键或单个删除触发）、resetNodes（调用resetNodes时触发）、addNodes（调用addNodes时触发）
- * 
+ *
  * @param  {Object} option.key 自定义节点数据属性名，详细见ztree文档
  * @param  {Object} option.simpleData={enable:false} ztree的简单数据模式，详细见ztree文档
  * @param  {Boolean} option.simpleData.enable=false 是否启用
@@ -75,7 +75,7 @@
 
     var limit=1; //最多选择的数量
     if (option.limit==false||option.limit=='false')
-        limit=100000;
+      limit=100000;
     else if (!option.limit)
       limit=1;
     else if (!isNaN(parseInt(option.limit)))
@@ -109,21 +109,21 @@
     }
 
     var $col=$('<div class="checktree-col">'+
-                  (option.title?
-                  '<div class="checktree-title">'+option.title+'</div>':'')+
-                  (option.searchable?
-                    '<div class="checktree-search">\
-                        <div class="checktree-search-wr">\
-                          <i class="checktree-search-icon"></i>\
-                          <input type="text" class="checktree-search-input" placeholder="请输入关键字">\
-                        </div>\
-                    </div>':'')+
-                  (option.checkAllable?
-                  '<div class="checktree-actions">\
-                    <a href="javascript:;" class="checktree-check_all">[全选]</a>\
-                  </div>':'')+
-                  '<div class="checktree-content">\
-                    <ul class="ztree checktree-tree" id="tree'+($('.ztree').length+1)+'">\
+        (option.title?
+            '<div class="checktree-title">'+option.title+'</div>':'')+
+        (option.searchable?
+            '<div class="checktree-search">\
+                <div class="checktree-search-wr">\
+                  <i class="checktree-search-icon"></i>\
+                  <input type="text" class="checktree-search-input" placeholder="请输入关键字">\
+                </div>\
+            </div>':'')+
+        (option.checkAllable?
+            '<div class="checktree-actions">\
+              <a href="javascript:;" class="checktree-check_all">[全选]</a>\
+            </div>':'')+
+        '<div class="checktree-content">\
+          <ul class="ztree checktree-tree" id="tree'+($('.ztree').length+1)+'">\
                     </ul>\
                   </div>\
                 </div>');
@@ -141,14 +141,14 @@
           </div>\
           <div class="checktree-content checktree-selected-list__content"></div>\
         </div>');
-      var $selectedList = $container.find('.checktree-selected-list')
     }
+    var $selectedList = $container.find('.checktree-selected-list')
 
     //列宽计算
     $container.find('.checktree-col').css("width",parseInt(10000/$container.find('.checktree-col').length)/100+"%")
     //树容器高度计算
-    $col.find('.checktree-content').css('height',$col.height()-($col.find('.checktree-title').outerHeight()||0)-($col.find('.checktree-search').outerHeight()||0)-($col.find('.checktree-actions').outerHeight()||0)+'px') 
-    
+    $col.find('.checktree-content').css('height',$col.height()-($col.find('.checktree-title').outerHeight()||0)-($col.find('.checktree-search').outerHeight()||0)-($col.find('.checktree-actions').outerHeight()||0)+'px')
+
     var $tree=$col.find('.checktree-tree')
     var zTreeObj;
     var curExpandNode = null;//当前展开路径
@@ -312,9 +312,9 @@
         addDiyDom:function(treeId, treeNode) {
           //自定义dom
           if (!treeNode[option.key.isParent]){
-             $("#" + treeNode.tId).addClass('not-parent');
+            $("#" + treeNode.tId).addClass('not-parent');
           }else{
-             $("#" + treeNode.tId).addClass('is-parent');
+            $("#" + treeNode.tId).addClass('is-parent');
           }
           if(option.countChild && (!asyncEnable||typeof treeNode.count!=="undefined")){
             var aObj = $("#" + treeNode.tId + "_a");
@@ -342,7 +342,7 @@
       var hd=function(ar,lv) {
         var nocheck;
         if(pncflag && $.inArray(lv,option.pNodeCheckable)==-1){
-            nocheck=true
+          nocheck=true
         }
         $.each(ar,function(i,node) {
           if(node[option.key.isParent] || node[option.key.children]){
@@ -367,7 +367,7 @@
 
     var idkey=(option.simpleData.enable?option.simpleData.idKey:option.key.id)||"id";
 
-     //默认选中
+    // 默认选中
     checkedNodes=[].concat(typeof option.checkedData==='string'?option.checkedData.split(','):option.checkedData);
     var emptyIndex=$.inArray("",checkedNodes);
     if( emptyIndex>-1){
@@ -414,22 +414,22 @@
     if( option.checkLevelable){
       //全选当前层级所有节点
       $container.on("click",".check-all-item",function() {
-          if($(this).hasClass("checked")){
-            //取消全选
-            $(this).removeClass("checked");
-            $(this).find('.chk').removeClass('checkbox_true_full').addClass('checkbox_false_full')
-            var ch=false
-          }else{
-            //全选
-            $(this).addClass("checked")
-            $(this).find('.chk').removeClass('checkbox_false_full').addClass('checkbox_true_full')
-            var ch=true
-          }
-          var pid=$(this).data("pid");
-          var nodes=zTreeObj.getNodeByTId(pid).children;
-          $.each(nodes,function(i,node) {
-            zTreeObj.checkNode(node,ch,false,true)
-          })
+        if($(this).hasClass("checked")){
+          //取消全选
+          $(this).removeClass("checked");
+          $(this).find('.chk').removeClass('checkbox_true_full').addClass('checkbox_false_full')
+          var ch=false
+        }else{
+          //全选
+          $(this).addClass("checked")
+          $(this).find('.chk').removeClass('checkbox_false_full').addClass('checkbox_true_full')
+          var ch=true
+        }
+        var pid=$(this).data("pid");
+        var nodes=zTreeObj.getNodeByTId(pid).children;
+        $.each(nodes,function(i,node) {
+          zTreeObj.checkNode(node,ch,false,true)
+        })
       });
     }
 
@@ -686,16 +686,16 @@
       var nodes=zTreeObj.getNodes();
       var firstP,firstN;
       firstN=zTreeObj.getNodesByFilter(function(node) {
-          return node[option.key.isParent]!==true&&node[option.key.checked||"checked"]==true&&!node[option.key.isHidden||"isHidden"]
+        return node[option.key.isParent]!==true&&node[option.key.checked||"checked"]==true&&!node[option.key.isHidden||"isHidden"]
       },true);
       if (!firstN) {
         firstN=zTreeObj.getNodesByFilter(function(node) {
-            return node[option.key.isParent]!==true&&!node[option.key.isHidden||"isHidden"]
+          return node[option.key.isParent]!==true&&!node[option.key.isHidden||"isHidden"]
         },true);
       }
       if (!firstN) {
         firstN=zTreeObj.getNodesByFilter(function(node) {
-            return node[option.key.isHidden||"isHidden"]
+          return node[option.key.isHidden||"isHidden"]
         },true);
       }
       if (firstN) firstP=firstN.getParentNode();
@@ -783,23 +783,23 @@
     //全选或取消全选
     if(!zTreeObj.originCheckAllNodes) zTreeObj.originCheckAllNodes=zTreeObj.checkAllNodes;
     zTreeObj.checkAllNodes=function(checked) {
-        if(setting.check.chkStyle === "radio"){
-          var chkNodes=zTreeObj.getCheckedNodes(true)
-          if(!checked && chkNodes.length>0){
-            zTreeObj.checkNode(chkNodes[0],false,true,false)
-            afterChange('uncheckAll');
-            updateCheckState(false);
-          }
-        }else{
-          zTreeObj.originCheckAllNodes(checked)
-          afterChange(checked?'checkAll':'uncheckAll');
-          updateCheckState(checked);
+      if(setting.check.chkStyle === "radio"){
+        var chkNodes=zTreeObj.getCheckedNodes(true)
+        if(!checked && chkNodes.length>0){
+          zTreeObj.checkNode(chkNodes[0],false,true,false)
+          afterChange('uncheckAll');
+          updateCheckState(false);
         }
-        if(!checked){
-          $selectedList.find("."+zTreeObj.setting.treeId+'-selected-list__item').remove();
-          checkedNodeIds=[];
-          checkedNodes=[];
-        }
+      }else{
+        zTreeObj.originCheckAllNodes(checked)
+        afterChange(checked?'checkAll':'uncheckAll');
+        updateCheckState(checked);
+      }
+      if(!checked){
+        $selectedList.find("."+zTreeObj.setting.treeId+'-selected-list__item').remove();
+        checkedNodeIds=[];
+        checkedNodes=[];
+      }
     }
 
     //重新渲染方法
@@ -861,15 +861,15 @@
 
 if(typeof GetQuery=="undefined"){
   //获取查询参数的值
-  function GetQuery(key) { 
-    var search = location.search.slice(1); //得到get方式提交的查询字符串 
-    var arr = search.split("&"); 
-    for (var i = 0; i < arr.length; i++) { 
-      var ar = arr[i].split("="); 
-      if (ar[0] == key) { 
+  function GetQuery(key) {
+    var search = location.search.slice(1); //得到get方式提交的查询字符串
+    var arr = search.split("&");
+    for (var i = 0; i < arr.length; i++) {
+      var ar = arr[i].split("=");
+      if (ar[0] == key) {
       return decodeURI(ar[1]);
-      } 
-    } 
+      }
+    }
     return null;
-  } 
+  }
 }

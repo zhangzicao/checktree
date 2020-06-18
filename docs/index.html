@@ -62,7 +62,7 @@
   }
   data.push(names)
   data.push(ids)
-   
+
   callbackName&&parent[callbackName](JSON.stringify(data))</pre>
       <p class="page-p">如果getCheckedData方法拿到的数据不是你想要的结果，你可以做处理再返回，或者你可以自己通过zTreeObj提供的<b>getCheckedNodes</b>或者<b>getNodesByFilter</b>方法生成你想要的数据</p>
     </div>
@@ -357,10 +357,11 @@ title:"请选择"
     <div class="ui-form-item">
       <label class="ui-form-label">选择：</label>
       <div class="ui-input-block">
-        <input type="text" class="ui-input lay-input" placeholder="选择经办人" readonly="readonly" onclick="layer_hand('checkTree8.html?limit='+($('#limit8').is(':checked')?'false':'1')+'&skin='+$('[name=\'skin8\']:checked').val()+'&showIcon='+($('#showIcon8').is(':checked')?'true':'false'),'请选择',440,[this,'#ids8'])">
+        <input type="text" class="ui-input lay-input" placeholder="选择经办人" readonly="readonly" onclick="layer_hand('checkTree8.html?limit='+($('#limit8').is(':checked')?'false':'1')+'&skin='+$('[name=\'skin8\']:checked').val()+'&showIcon='+($('#showIcon8').is(':checked')?'true':'false')+'&showLine='+($('#showLine8').is(':checked')?'true':'false'),'请选择',440,[this,'#ids8'])">
         <input type="text " class="ui-input" id="ids8" >
         <label><input type="checkbox" id="limit8" checked>多选</label>
         <label><input type="checkbox" id="showIcon8" checked>显示图标</label>
+        <label><input type="checkbox" id="showLine8" checked>显示连线</label>
       </div>
       <p class="page-p">请选择要显示的皮肤：</p>
       <ul style="padding:0 50px 20px">
