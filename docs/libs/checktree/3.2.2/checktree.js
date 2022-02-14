@@ -3,7 +3,7 @@
  * @namespace $.fn.checkTree
  * @author zhangzicao
  * @requires jquery,ztree
- * @version 3.2.1
+ * @version 3.2.2
  * @param  {array} zNodes 数据json
  * @param  {object} option 配置
  * @param  {string} option.title 列标题
@@ -573,8 +573,8 @@
         changeNodes=checkedNodes;
       }
 
-      if(!isInit && asyncEnable && setting.check.chkStyle === "radio" && checkedNodeIds.length>0){
-        //异步模式单选选中时，取消未加载节点的选中
+      if(!isInit && setting.check.chkStyle === "radio" && checkedNodeIds.length>0){
+        //单选选中时，取消未加载节点的选中
         checkedNodeIds=[];
         checkedNodes=[];
         $selectedList.find("."+zTreeObj.setting.treeId+'-selected-list__item').remove();
