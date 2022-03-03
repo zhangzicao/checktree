@@ -3,7 +3,7 @@
  * @namespace $.fn.checkTree
  * @author zhangzicao
  * @requires jquery,ztree
- * @version 3.2.2
+ * @version 3.2.3
  * @param  {array} zNodes 数据json
  * @param  {object} option 配置
  * @param  {string} option.title 列标题
@@ -11,6 +11,7 @@
  * @param  {Boolean} option.autoExpand=false 是否默认展开所有节点,设为'first'时只展开第一个父节点
  * @param  {Boolean} option.singlePath=false 是否只能有一条展开路径
  * @param  {Boolean} option.searchable=true 是否启用本地查询
+ * @param  {function} option.filterNodeMethod 自定义查询，接收参数(node,keyword)
  * @param  {Boolean|Array} option.checkAllable=true 是否全选功能
  * @param  {Boolean} option.checkLevelable=false 是否开启层级全选
  * @param  {Object|String} option.checkedData 默认选中的id列表，支持逗号隔开的string和Array
@@ -444,7 +445,7 @@
     if(option.searchable){
       $col.find('.checktree-search-input').on('keyup',function(e) {
         if (e.keyCode!=13&&e.keyCode!=108) {return;}
-        var key=$(this).val();
+        var key=$.trim($(this).val());
 
         if(asyncEnable){
           //异步模式下使用后台查询
@@ -452,19 +453,29 @@
           zTreeObj.setting.async.otherParam.keyWord=key;
           zTreeObj.reAsyncChildNodes(null, "refresh");
         }else{
+          var sp1=zTreeObj.setting.view.expandSpeed;
+          zTreeObj.setting.view.expandSpeed="";
+          zTreeObj.expandAll(false);
+          zTreeObj.setting.view.expandSpeed=sp1;
           if(key.length===0){
-            var sp1=zTreeObj.setting.view.expandSpeed;
-            zTreeObj.setting.view.expandSpeed="";
-            zTreeObj.expandAll(false);
-            zTreeObj.setting.view.expandSpeed=sp1;
             var rsNodes=zTreeObj.getNodesByFilter(function() {return true;});
+            zTreeObj.showNodes(rsNodes);
+            if(option.autoExpand&&option.singlePath) expandFirst();
           }else{
             var nodes = zTreeObj.getNodesByFilter(function(node) {
               return !node[option.key.isHidden||"isHidden"];
             });
             zTreeObj.hideNodes(nodes);
-            var rsNodes = zTreeObj.getNodesByParamFuzzy([option.key.name||"name"], key, null);
+            var rsNodes
+            if(typeof option.filterNodeMethod==='function'){
+              rsNodes = zTreeObj.getNodesByFilter(function (node) {
+                return option.filterNodeMethod(node,key)
+              })
+            }else{
+              rsNodes = zTreeObj.getNodesByParamFuzzy([option.key.name||"name"], key, null);
+            }
             var nodearr=rsNodes;
+            var needExpandNodes = []
             $.each(nodearr,function(i,node) {
               while(node){
                 node=node.getParentNode();
@@ -473,12 +484,21 @@
                 }).length==0){
                   rsNodes.push(node)
                 }
+                if(node&&$(needExpandNodes).filter(function(j,jnode) {
+                  return jnode.tId==node.tId
+                }).length==0){
+                  needExpandNodes.push(node)
+                }
               }
             })
-          }
 
-          zTreeObj.showNodes(rsNodes);
-          if(option.autoExpand&&option.singlePath) expandFirst();
+            if(rsNodes.length<200){
+              $(needExpandNodes).filter(function(i,node) {
+                zTreeObj.expandNode(node, true);
+              })
+            }
+            zTreeObj.showNodes(rsNodes);
+          }
 
           if(option.showSelected){
             $selectedList.find("."+zTreeObj.setting.treeId+"-selected-list__item").addClass("disabled")
@@ -523,6 +543,10 @@
       }
       //删除所有
       $selectedList.on("click",".checktree-delete_all",function() {
+        if($('.'+zTreeObj.setting.treeId+'-selected-list__item.disabled').length>0){
+          parent.layer.alert('该功能在搜索状态下不可用。')
+          return
+        }
         if(option.checkAllable){
           $col.find(".checktree-check_all").removeClass('inverse')
         }
