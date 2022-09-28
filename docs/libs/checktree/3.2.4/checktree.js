@@ -3,7 +3,7 @@
  * @namespace $.fn.checkTree
  * @author zhangzicao
  * @requires jquery,ztree
- * @version 3.2.3
+ * @version 3.2.4
  * @param  {array} zNodes 数据json
  * @param  {object} option 配置
  * @param  {string} option.title 列标题
@@ -124,7 +124,7 @@
               <a href="javascript:;" class="checktree-check_all">[全选]</a>\
             </div>':'')+
         '<div class="checktree-content">\
-          <ul class="ztree checktree-tree" id="tree'+($('.ztree').length+1)+'">\
+          <ul class="ztree checktree-tree" id="tree'+($('.ztree').length+1+String(new Date().getTime()))+'">\
                     </ul>\
                   </div>\
                 </div>');
